@@ -39,13 +39,13 @@ public class PositioningActivity extends MainActivity {
 
     private void initHttp() {
 
-        Log.d("aaa", "onSuccess: ");
+        Log.e("aaa", "onSuccess: ");
         RequestParams params = new RequestParams(Url.CITI_URL);
         x.http().get(params, new Callback.CommonCallback<CityInfo>() {
             @Override
             public void onSuccess(CityInfo result) {
                  citys= result.getP();
-                Log.e("aaa", "onSuccess: "+result.toString());
+                Log.e("aaa", "onSuccess: "+result.getP().toString());
             }
 
             @Override
