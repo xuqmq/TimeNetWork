@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     tools:context="com.bowen.timenetwork.activity.PositioningActivity">
 
-    <com.bowen.timenetwork.view.SideBar
+    <ListView
+        android:id="@+id/lv_position"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+    </ListView>
 </RelativeLayout>

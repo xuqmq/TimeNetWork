@@ -50,36 +50,19 @@ public class SideBar extends View {
             "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
             "W", "X", "Y", "Z"};
     private Paint paint = new Paint();
-
-    private TextView mTextDialog;
-
     private Context mContext;
-
-    /**
-     * 为SideBar设置显示字母的TextView
-     *
-     * @param mTextDialog
-     */
-    public void setTextView(TextView mTextDialog) {
-        this.mTextDialog = mTextDialog;
-    }
-
-
     public SideBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
     }
-
     public SideBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }
-
     public SideBar(Context context) {
         super(context);
         mContext = context;
     }
-
     /**
      * 重写这个方法
      */
@@ -99,25 +82,6 @@ public class SideBar extends View {
         }
 
     }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        final int action = event.getAction();
-        final float y = event.getY();// 点击y坐标
-
-
-        switch (action) {
-            case MotionEvent.ACTION_UP:
-                setBackgroundDrawable(new ColorDrawable(0x00000000));
-                invalidate();
-                if (mTextDialog != null) {
-                    mTextDialog.setVisibility(View.INVISIBLE);
-                }
-
-        }
-        return true;
-    }
-
     public static int dip2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);

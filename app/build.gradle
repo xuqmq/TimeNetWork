@@ -26,4 +26,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'org.xutils:xutils:3.3.44'
     compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.android.support:recyclerview-v7:24.0.0'
 }
