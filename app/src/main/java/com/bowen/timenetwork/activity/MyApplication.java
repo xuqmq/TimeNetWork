@@ -11,6 +11,6 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        x.Ext.init(MyApplication.this);
+        x.Ext.init(this);
     }
 }

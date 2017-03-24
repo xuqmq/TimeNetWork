@@ -27,7 +27,7 @@ public class PositioningActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_positioning);
         initHttp();//网络请求
-        initDatas();//初始化数据
+       // initDatas();//初始化数据
     }
 
     private void initDatas() {
@@ -38,11 +38,14 @@ public class PositioningActivity extends MainActivity {
     }
 
     private void initHttp() {
+
+        Log.d("aaa", "onSuccess: ");
         RequestParams params = new RequestParams(Url.CITI_URL);
         x.http().get(params, new Callback.CommonCallback<CityInfo>() {
             @Override
             public void onSuccess(CityInfo result) {
                  citys= result.getP();
+                Log.e("aaa", "onSuccess: "+result.toString());
             }
 
             @Override
