@@ -26,6 +26,7 @@ public class GuideAdapter extends PagerAdapter {
 
     //添加子布局
     @Override
+
     public Object instantiateItem(ViewGroup container, int position) {
         container.addView(list.get(position));
         return list.get(position);
