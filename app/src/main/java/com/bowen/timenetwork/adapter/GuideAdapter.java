@@ -32,6 +32,7 @@ public class GuideAdapter extends PagerAdapter {
     }
 
     //移除子布局
+
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView(list.get(position));
