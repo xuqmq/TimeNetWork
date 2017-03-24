@@ -43,7 +43,6 @@ public class PositioningActivity extends MainActivity {
             @Override
             public void onSuccess(CityInfo result) {
                  citys= result.getP();
-                Log.d("aaa", "onSuccess: "+citys);
             }
 
             @Override
