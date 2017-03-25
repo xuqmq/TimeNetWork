@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <android.support.v4.view.ViewPager
+    <FrameLayout
+        android:id="@+id/fl_content"
         android:layout_above="@+id/rg_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </android.support.v4.view.ViewPager>
+    </FrameLayout>
 <RadioGroup
     android:id="@+id/rg_content"
     android:layout_marginBottom="15dp"
@@ -19,34 +19,34 @@
     android:orientation="horizontal"
     >
     <RadioButton
-        android:clickable="true"
-        android:padding="10dp"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+        android:id="@+id/rb_home_content"
+        style="@style/tab_radio"
+        android:drawableTop="@drawable/select_home"
+        android:text="首页"
+         />
     <RadioButton
-        android:clickable="true"
-        android:padding="10dp"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+        android:id="@+id/rb_paytikel_content"
+        style="@style/tab_radio"
+        android:drawableTop="@drawable/select_paytikel"
+        android:text="购票"
+        />
     <RadioButton
-        android:clickable="true"
-        android:padding="10dp"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+        android:id="@+id/rb_shop_content"
+        style="@style/tab_radio"
+        android:drawableTop="@drawable/select_shop"
+        android:text="商城"
+       />
     <RadioButton
-        android:clickable="true"
-        android:padding="10dp"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+        android:id="@+id/rb_discover_content"
+        style="@style/tab_radio"
+        android:drawableTop="@drawable/select_discover"
+        android:text="发现"
+       />
     <RadioButton
-        android:clickable="true"
-        android:padding="10dp"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+        android:id="@+id/rb_user_content"
+        style="@style/tab_radio"
+        android:drawableTop="@drawable/select_user"
+        android:text="我的"
+     />
 </RadioGroup>
 </RelativeLayout>

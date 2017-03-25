@@ -55,7 +55,6 @@ public class PositionGridItemAdapter extends BaseAdapter {
 
     class ViewHolder {
         private TextView tv;
-
         public ViewHolder(View view) {
             tv = (TextView) view.findViewById(R.id.tv_item_gv_position);
             view.setTag(this);

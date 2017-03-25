@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:background="@drawable/comments_background"
+        android:id="@+id/ll_header"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+           <EditText
+           android:maxLength="10"
+           android:textColor="#88888888"
+           android:drawableLeft="@drawable/title_search_icon"
+           android:paddingLeft="15dp"
+           android:text="输入城市名"
+           android:layout_weight="5"
+           android:layout_width="0dp"
+           android:layout_height="match_parent" />
+          <Button
+           android:visibility="gone"
+           android:text="取消"
+           android:layout_weight="1"
+           android:layout_width="0dp"
+           android:layout_height="match_parent" />
+    </LinearLayout>
+    <TextView
+        android:background="@drawable/comments_background"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        android:textSize="15sp"
+        android:paddingLeft="15dp"
+        android:text="热门城市"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rlv_header"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>

@@ -1,7 +1,12 @@
 package com.bowen.timenetwork.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bowen.timenetwork.MainActivity;
 import com.bowen.timenetwork.R;
@@ -16,7 +21,9 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class PositioningActivity extends MainActivity {
@@ -25,26 +32,33 @@ public class PositioningActivity extends MainActivity {
 
     @ViewInject(R.id.lv_position)
     ListView listView;
+    private View view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_positioning);
         x.view().inject(this);
         initHttp();//网络请求
+        initHeaderView();
+        listView.addHeaderView(view);
+    }
 
+    private void initHeaderView() {
+        LayoutInflater layoutInflater = getLayoutInflater();
+        view = layoutInflater.inflate(R.layout.layout_headerview, null);
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.ll_header);
+         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rlv_header);
     }
 
 
-
     private void initDatas(CityInfo cityInfo) {
-     List<String> cityListName = new ArrayList<>();//城市名
-     List<Integer> cityIds = new ArrayList<>();
+        Map<String,String> map = new HashMap<>();
         for (int i = 0 ; i < cityInfo.getP().size() ; i++){
-            cityListName.add(cityInfo.getP().get(i).getN());
-            cityIds.add(cityInfo.getP().get(i).getId());
+            map.put(cityInfo.getP().get(i).getId()+"",cityInfo.getP().get(i).getN());
         }
 
-        PositionAdapter positionAdapter = new PositionAdapter(cityListName,this);
+        PositionAdapter positionAdapter = new PositionAdapter(map,this,this);
         listView.setAdapter(positionAdapter);
         positionAdapter.notifyDataSetInvalidated();
     }
