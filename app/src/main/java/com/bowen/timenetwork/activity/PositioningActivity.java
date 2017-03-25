@@ -7,6 +7,7 @@ import com.bowen.timenetwork.MainActivity;
 import com.bowen.timenetwork.R;
 import com.bowen.timenetwork.adapter.PositionAdapter;
 import com.bowen.timenetwork.bean.CityInfo;
+import com.bowen.timenetwork.tools.GsonTool;
 import com.bowen.timenetwork.tools.Url;
 import com.google.gson.Gson;
 import org.xutils.common.Callback;
@@ -54,8 +55,7 @@ public class PositioningActivity extends MainActivity {
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Gson gson = new Gson();
-                CityInfo cityInfo = gson.fromJson(result,CityInfo.class);
+                CityInfo cityInfo = GsonTool.parseJson2Object(result,CityInfo.class);
                 initDatas(cityInfo);//初始化数据
             }
 

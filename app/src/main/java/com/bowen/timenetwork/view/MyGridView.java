@@ -1,24 +1,24 @@
 package com.bowen.timenetwork.view;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.widget.GridView;
 
 /**
  * Created by Administrator on 2017/3/24 0024.
  */
-public class MyRecyclerView extends RecyclerView {
-    public MyRecyclerView(Context context) {
+public class MyGridView extends GridView {
+
+    public MyGridView(Context context) {
         super(context);
     }
 
-    public MyRecyclerView(Context context, @Nullable AttributeSet attrs) {
+    public MyGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MyRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+    public MyGridView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override
