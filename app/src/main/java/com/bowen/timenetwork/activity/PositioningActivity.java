@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -43,7 +44,7 @@ public class PositioningActivity extends MainActivity {
     private List<String> list;
     private PositionAdapter positionAdapter;
     private PositionToAdapter toAdapter;
-    private boolean isSelect;//标志位选择适配器
+    private ListView lvItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,6 @@ public class PositioningActivity extends MainActivity {
         initHeaderView();
         listView.addHeaderView(view);
         initHttp();//网络请求
-        listView.setAdapter(positionAdapter);
         initLisener();//监听事件
     }
 
@@ -66,10 +66,12 @@ public class PositioningActivity extends MainActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus){
-                    isSelect = true;
                     btn.setVisibility(View.VISIBLE);
                     btn.setText("取消");
                     linearLayout.setVisibility(View.GONE);
+                    lvItem.setVisibility(View.VISIBLE);
+
+
                 }
             }
         });
@@ -77,9 +79,11 @@ public class PositioningActivity extends MainActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editText.clearFocus();
+                btn.requestFocus();
                 btn.setVisibility(View.GONE);
                 linearLayout.setVisibility(View.VISIBLE);
+                lvItem.setVisibility(View.GONE);
+                editText.clearFocus();
             }
         });
     }
@@ -92,6 +96,7 @@ public class PositioningActivity extends MainActivity {
         editText = (EditText) view.findViewById(R.id.et_header);
         myGridView = (MyGridView) view.findViewById(R.id.gv_header);
         btn = (Button) view.findViewById(R.id.btn_header);
+        lvItem = (ListView) view.findViewById(R.id.lv_header);
         }
 
 
@@ -99,23 +104,21 @@ public class PositioningActivity extends MainActivity {
          map = new HashMap<>();//初始化id和name数据
          mList = new ArrayList<>();//初始化头部数据
         list = new ArrayList<>();//初始化name数据
-        for (int i = 0 ; i < cityInfo.getP().size() ; i++){
-            map.put(cityInfo.getP().get(i).getId()+"",cityInfo.getP().get(i).getN());
+        for (int i = 0 ; i < cityInfo.getP().size() ; i++) {
+            map.put(cityInfo.getP().get(i).getId() + "", cityInfo.getP().get(i).getN());
             list.add(cityInfo.getP().get(i).getN());
-            if (i < 12){
+            if (i < 12) {
                 mList.add(cityInfo.getP().get(i).getN());
             }
         }
-        if (!isSelect) {
-
             positionAdapter = new PositionAdapter(map, PositioningActivity.this, PositioningActivity.this);
             listView.setAdapter(positionAdapter);
             positionAdapter.notifyDataSetInvalidated();
-        }else {
+
             toAdapter = new PositionToAdapter(list, PositioningActivity.this);
-            listView.setAdapter(toAdapter);
+            lvItem.setAdapter(toAdapter);
             toAdapter.notifyDataSetInvalidated();
-        }
+
         //头部适配器
         PositionGridItemAdapter itemAdapter = new PositionGridItemAdapter(mList,PositioningActivity.this);
         myGridView.setAdapter(itemAdapter);
