@@ -70,8 +70,6 @@ public class PositioningActivity extends MainActivity {
                     btn.setText("取消");
                     linearLayout.setVisibility(View.GONE);
                     lvItem.setVisibility(View.VISIBLE);
-
-
                 }
             }
         });
@@ -79,11 +77,11 @@ public class PositioningActivity extends MainActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn.requestFocus();
+                editText.clearFocus();
                 btn.setVisibility(View.GONE);
                 linearLayout.setVisibility(View.VISIBLE);
                 lvItem.setVisibility(View.GONE);
-                editText.clearFocus();
+
             }
         });
     }
