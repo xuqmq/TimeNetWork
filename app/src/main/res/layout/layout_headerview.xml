@@ -12,9 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="40dp">
            <EditText
+           android:layout_marginRight="20dp"
+           android:layout_marginLeft="20dp"
+           android:id="@+id/et_header"
+           android:background="@drawable/edittext_shape"
            android:maxLength="10"
            android:textColor="#88888888"
-           android:drawableLeft="@drawable/title_search_icon"
+           android:drawableLeft="@drawable/title_bar_search_zoomin"
            android:paddingLeft="15dp"
            android:text="输入城市名"
            android:layout_weight="5"
@@ -22,7 +26,9 @@
            android:layout_height="match_parent" />
           <Button
            android:visibility="gone"
-           android:text="取消"
+           android:layout_marginRight="10dp"
+           android:textColor="#88888888"
+           android:id="@+id/btn_header"
            android:layout_weight="1"
            android:layout_width="0dp"
            android:layout_height="match_parent" />
@@ -33,13 +39,25 @@
         android:gravity="center_vertical"
         android:textSize="15sp"
         android:paddingLeft="15dp"
+        android:text="当前定位"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+    <TextView
+        android:background="@drawable/comments_background"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        android:textSize="15sp"
+        android:paddingLeft="15dp"
         android:text="热门城市"
         android:layout_width="match_parent"
         android:layout_height="30dp" />
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rlv_header"
+    <com.bowen.timenetwork.view.MyGridView
+        android:numColumns="4"
+        android:stretchMode="columnWidth"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/gv_header"
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
+    </com.bowen.timenetwork.view.MyGridView>
 </LinearLayout>
