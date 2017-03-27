@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bowen.timenetwork.MainActivity;
 import com.bowen.timenetwork.R;
@@ -36,7 +37,7 @@ public class PositioningActivity extends MainActivity {
     private LinearLayout linearLayout;
     private EditText editText;
     private MyGridView myGridView;
-    private Button btn;
+    private TextView tv_visibility;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,25 +48,23 @@ public class PositioningActivity extends MainActivity {
         listView.addHeaderView(view);
         initHttp();//网络请求
 
+
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.clearFocus();
         //监听editText焦点变化
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus){
-                   btn.setVisibility(View.GONE);
+                    tv_visibility.setVisibility(View.GONE);
                 }else {
-                    btn.setVisibility(View.VISIBLE);
-                    btn.setText("取消");
+                    tv_visibility.setVisibility(View.VISIBLE);
+                    tv_visibility.setText("取消");
                 }
             }
         });
-        //监听button按钮
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
     }
 
 
@@ -76,7 +75,7 @@ public class PositioningActivity extends MainActivity {
          linearLayout = (LinearLayout) view.findViewById(R.id.ll_header);
         editText = (EditText) view.findViewById(R.id.et_header);
         myGridView = (MyGridView) view.findViewById(R.id.gv_header);
-        btn = (Button) view.findViewById(R.id.btn_header);
+        tv_visibility = (TextView) view.findViewById(R.id.tv_header_visibility);
         }
 
 

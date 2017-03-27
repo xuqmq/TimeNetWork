@@ -20,15 +20,18 @@
            android:textColor="#88888888"
            android:drawableLeft="@drawable/title_bar_search_zoomin"
            android:paddingLeft="15dp"
-           android:text="输入城市名"
+           android:hint="输入城市名"
            android:layout_weight="5"
            android:layout_width="0dp"
            android:layout_height="match_parent" />
-          <Button
+          <TextView
+              android:background="@null"
+           android:text="取消"
+           android:gravity="center"
            android:visibility="gone"
            android:layout_marginRight="10dp"
            android:textColor="#88888888"
-           android:id="@+id/btn_header"
+           android:id="@+id/tv_header_visibility"
            android:layout_weight="1"
            android:layout_width="0dp"
            android:layout_height="match_parent" />
