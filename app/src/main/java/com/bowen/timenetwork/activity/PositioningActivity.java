@@ -8,12 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.bowen.timenetwork.MainActivity;
 import com.bowen.timenetwork.R;
 import com.bowen.timenetwork.adapter.PositionAdapter;
 import com.bowen.timenetwork.adapter.PositionGridItemAdapter;
+import com.bowen.timenetwork.adapter.PositionToAdapter;
 import com.bowen.timenetwork.bean.CityInfo;
 import com.bowen.timenetwork.tools.GsonTool;
 import com.bowen.timenetwork.tools.Url;
@@ -37,7 +37,13 @@ public class PositioningActivity extends MainActivity {
     private LinearLayout linearLayout;
     private EditText editText;
     private MyGridView myGridView;
-    private TextView tv_visibility;
+    private Button btn;
+    private Map<String, String> map;
+    private List<String> mList;
+    private List<String> list;
+    private PositionAdapter positionAdapter;
+    private PositionToAdapter toAdapter;
+    private boolean isSelect;//标志位选择适配器
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +53,11 @@ public class PositioningActivity extends MainActivity {
         initHeaderView();
         listView.addHeaderView(view);
         initHttp();//网络请求
+        listView.setAdapter(positionAdapter);
+        initLisener();//监听事件
+    }
 
-
+    private void initLisener() {
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
         editText.clearFocus();
@@ -56,17 +65,24 @@ public class PositioningActivity extends MainActivity {
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    tv_visibility.setVisibility(View.GONE);
-                }else {
-                    tv_visibility.setVisibility(View.VISIBLE);
-                    tv_visibility.setText("取消");
+                if (!hasFocus){
+                    isSelect = true;
+                    btn.setVisibility(View.VISIBLE);
+                    btn.setText("取消");
+                    linearLayout.setVisibility(View.GONE);
                 }
             }
         });
-
+        //监听button按钮
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText.clearFocus();
+                btn.setVisibility(View.GONE);
+                linearLayout.setVisibility(View.VISIBLE);
+            }
+        });
     }
-
 
 
     private void initHeaderView() {
@@ -75,25 +91,33 @@ public class PositioningActivity extends MainActivity {
          linearLayout = (LinearLayout) view.findViewById(R.id.ll_header);
         editText = (EditText) view.findViewById(R.id.et_header);
         myGridView = (MyGridView) view.findViewById(R.id.gv_header);
-        tv_visibility = (TextView) view.findViewById(R.id.tv_header_visibility);
+        btn = (Button) view.findViewById(R.id.btn_header);
         }
 
 
     private void initDatas(CityInfo cityInfo) {
-        Map<String,String> map = new HashMap<>();//初始化数据
-        List<String> mList = new ArrayList<>();
+         map = new HashMap<>();//初始化id和name数据
+         mList = new ArrayList<>();//初始化头部数据
+        list = new ArrayList<>();//初始化name数据
         for (int i = 0 ; i < cityInfo.getP().size() ; i++){
             map.put(cityInfo.getP().get(i).getId()+"",cityInfo.getP().get(i).getN());
+            list.add(cityInfo.getP().get(i).getN());
             if (i < 12){
                 mList.add(cityInfo.getP().get(i).getN());
             }
         }
-        PositionAdapter positionAdapter = new PositionAdapter(map,this,this);
-        listView.setAdapter(positionAdapter);
-        positionAdapter.notifyDataSetInvalidated();
+        if (!isSelect) {
 
+            positionAdapter = new PositionAdapter(map, PositioningActivity.this, PositioningActivity.this);
+            listView.setAdapter(positionAdapter);
+            positionAdapter.notifyDataSetInvalidated();
+        }else {
+            toAdapter = new PositionToAdapter(list, PositioningActivity.this);
+            listView.setAdapter(toAdapter);
+            toAdapter.notifyDataSetInvalidated();
+        }
         //头部适配器
-        PositionGridItemAdapter itemAdapter = new PositionGridItemAdapter(mList,this);
+        PositionGridItemAdapter itemAdapter = new PositionGridItemAdapter(mList,PositioningActivity.this);
         myGridView.setAdapter(itemAdapter);
         itemAdapter.notifyDataSetInvalidated();
 

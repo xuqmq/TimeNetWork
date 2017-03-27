@@ -6,7 +6,6 @@
 
     <LinearLayout
         android:background="@drawable/comments_background"
-        android:id="@+id/ll_header"
         android:layout_marginTop="15dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -24,18 +23,25 @@
            android:layout_weight="5"
            android:layout_width="0dp"
            android:layout_height="match_parent" />
-          <TextView
-              android:background="@null"
+          <Button
+           android:clickable="true"
+           android:background="@null"
            android:text="取消"
-           android:gravity="center"
            android:visibility="gone"
            android:layout_marginRight="10dp"
            android:textColor="#88888888"
-           android:id="@+id/tv_header_visibility"
+           android:id="@+id/btn_header"
            android:layout_weight="1"
            android:layout_width="0dp"
            android:layout_height="match_parent" />
     </LinearLayout>
+    <LinearLayout
+        android:background="@drawable/comments_background"
+        android:id="@+id/ll_header"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <TextView
         android:background="@drawable/comments_background"
         android:layout_marginTop="15dp"
@@ -63,4 +69,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </com.bowen.timenetwork.view.MyGridView>
+    </LinearLayout>
 </LinearLayout>
