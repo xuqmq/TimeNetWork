@@ -20,6 +20,7 @@ import com.bowen.timenetwork.R;
 import com.bowen.timenetwork.bean.HomeInfo;
 import com.bowen.timenetwork.tools.GsonTool;
 import com.bowen.timenetwork.tools.Url;
+import com.google.gson.Gson;
 
 
 import org.xutils.common.Callback;
@@ -83,7 +84,6 @@ public class HomeFragment extends BaseFragment {
             public void onSuccess(String result) {
                 HomeInfo homeDatas = GsonTool.parseJson2Object(result, HomeInfo.class);
 
-               // Log.d("aaa", "onSuccess:2222= "+homeDatas.toString());
                 initDataToView(homeDatas);
 
             }
@@ -105,6 +105,7 @@ public class HomeFragment extends BaseFragment {
         for (int i = 0 ; i < homeInfo.getMovies().size() ; i ++){
               imageViewList.add(homeInfo.getMovies().get(i).getImg());
         }
+
         banner.setPages(new CBViewHolderCreator<LocalImageHolderView>() {
             @Override
             public LocalImageHolderView createHolder() {
@@ -115,7 +116,7 @@ public class HomeFragment extends BaseFragment {
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);//设置导航方向
     }
 
-    public class LocalImageHolderView implements Holder<HomeInfo> {
+    public class LocalImageHolderView implements Holder<String> {
         private ImageView imageView;
         @Override
         public View createView(Context context) {
@@ -125,8 +126,9 @@ public class HomeFragment extends BaseFragment {
         }
 
         @Override
-        public void UpdateUI(Context context, final int position,HomeInfo homeIfo ) {
-            x.image().bind(imageView,homeIfo.getMovies().get(position).getImg());
+        public void UpdateUI(Context context, final int position,String url ) {
+            x.image().bind(imageView,url);
+
         }
     }
     public void onButtonPressed(Uri uri) {
