@@ -18,4 +18,5 @@ public class GsonTool {
     public static <T> T parseJson2Object(String json,Class<T> object) {
                 return gson.fromJson(json,object);
     }
+
 }

@@ -42,15 +42,28 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
     <TextView
         android:background="@drawable/comments_background"
-        android:layout_marginTop="15dp"
         android:gravity="center_vertical"
         android:textSize="15sp"
         android:paddingLeft="15dp"
         android:text="当前定位"
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_width="100dp"
+        android:layout_height="match_parent" />
+    <TextView
+        android:id="@+id/tv_header_city_name"
+        android:textSize="15dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/comments_background"
+        android:text="正在定位......"
+        android:paddingLeft="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+        </LinearLayout>
     <TextView
         android:background="@drawable/comments_background"
         android:layout_marginTop="15dp"

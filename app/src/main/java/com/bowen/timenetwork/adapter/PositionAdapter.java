@@ -37,17 +37,19 @@ public class PositionAdapter extends BaseAdapter {
     private Context  mContext;
     private List<CityData> citylist;//列表集合
     private Activity activity;
+    private TextView tvCityName;
 
     /**
      * 汉字转换成拼音的类
      */
     private CharacterParser characterParser;
 
-    public PositionAdapter(Map<String,String> mList, Context mContext, Activity activity) {
+    public PositionAdapter(Map<String,String> mList, Context mContext, Activity activity,TextView tvCityName) {
         this.activity =activity;
         this.mMap = mList;
         this.mInflater = LayoutInflater.from(mContext);
         this.mContext = mContext;
+        this.tvCityName = tvCityName;
         for (String title : b) {
             titles.add(title);
         }
@@ -97,6 +99,7 @@ public class PositionAdapter extends BaseAdapter {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                tvCityName.setText(list.get(position));
                 Iterator<Map.Entry<String, String>> it = mMap.entrySet().iterator();
                 while (it.hasNext()){
                     Map.Entry<String,String> entry =  it.next();

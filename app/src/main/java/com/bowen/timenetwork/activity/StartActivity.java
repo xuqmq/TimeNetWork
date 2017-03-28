@@ -40,7 +40,7 @@ public class StartActivity extends MainActivity {
                     }
                 }
             }).start();
-        }else {
+        }else{
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -55,6 +55,21 @@ public class StartActivity extends MainActivity {
                 }
             }).start();
         }
+//        else {
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        Thread.sleep(2000);
+//                        intent.setClass(StartActivity.this,ContentActivity.class);
+//                        startActivity(intent);
+//                        finish();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }).start();
+//        }
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("count",++isIntent);
         editor.commit();
