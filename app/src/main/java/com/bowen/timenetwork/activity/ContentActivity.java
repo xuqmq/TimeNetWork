@@ -35,11 +35,12 @@ public class ContentActivity extends MainActivity {
         x.view().inject(this);
         Intent intent = getIntent();
         String cityId = intent.getStringExtra("cityId");
-        initListener(cityId);
+        String cityName = intent.getStringExtra("cityName");
+        initListener(cityId,cityName);
         radioGroup.check(R.id.rb_home_content);//起始选中首页
     }
 
-    private void initListener(final String cityId) {
+    private void initListener(final String cityId,final String cityName) {
         fragmentManager = getSupportFragmentManager();
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -49,7 +50,7 @@ public class ContentActivity extends MainActivity {
                 switch (checkedId){
                     case R.id.rb_home_content:
                         if (homeFragment == null){
-                            homeFragment = HomeFragment.newInstance(cityId,null);
+                            homeFragment = HomeFragment.newInstance(cityId,cityName);
                             fragmentTransaction.add(R.id.fl_content,homeFragment);
                         }else {
                             fragmentTransaction.show(homeFragment);

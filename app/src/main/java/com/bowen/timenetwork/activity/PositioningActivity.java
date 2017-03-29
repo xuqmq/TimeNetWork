@@ -102,9 +102,10 @@ public class PositioningActivity extends MainActivity {
                 mList.add(cityInfo.getP().get(i).getN());
             }
         }
-            positionAdapter = new PositionAdapter(map, PositioningActivity.this, PositioningActivity.this,tvCityName);
+            positionAdapter = new PositionAdapter(map, PositioningActivity.this,tvCityName);
             listView.setAdapter(positionAdapter);
             positionAdapter.notifyDataSetInvalidated();
+
 
             toAdapter = new PositionToAdapter(list, PositioningActivity.this);
             lvItem.setAdapter(toAdapter);
@@ -121,6 +122,7 @@ public class PositioningActivity extends MainActivity {
                 tvCityName.setText(list.get(position));
                 Intent intent = new Intent(PositioningActivity.this, ContentActivity.class);
                 intent.putExtra("cityId",selectId(list.get(position),cityInfo));
+                intent.putExtra("cityName",list.get(position));
                 startActivity(intent);
                 finish();
             }
@@ -131,6 +133,7 @@ public class PositioningActivity extends MainActivity {
                 tvCityName.setText(mList.get(position));
                 Intent intent = new Intent(PositioningActivity.this, ContentActivity.class);
                 intent.putExtra("cityId",selectId(mList.get(position),cityInfo));
+                intent.putExtra("cityName",mList.get(position));
                 startActivity(intent);
                 finish();
             }

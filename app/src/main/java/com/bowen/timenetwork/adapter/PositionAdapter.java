@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bowen.timenetwork.R;
 import com.bowen.timenetwork.activity.ContentActivity;
@@ -34,7 +35,6 @@ public class PositionAdapter extends BaseAdapter {
     private  List<String> titles=new ArrayList<>();
     private Map<String,String> mMap;//城市ID和名字
     private LayoutInflater mInflater;
-    private Context  mContext;
     private List<CityData> citylist;//列表集合
     private Activity activity;
     private TextView tvCityName;
@@ -44,11 +44,10 @@ public class PositionAdapter extends BaseAdapter {
      */
     private CharacterParser characterParser;
 
-    public PositionAdapter(Map<String,String> mList, Context mContext, Activity activity,TextView tvCityName) {
+    public PositionAdapter(Map<String,String> mList,  Activity activity,TextView tvCityName) {
         this.activity =activity;
         this.mMap = mList;
-        this.mInflater = LayoutInflater.from(mContext);
-        this.mContext = mContext;
+        this.mInflater = LayoutInflater.from(activity);
         this.tvCityName = tvCityName;
         for (String title : b) {
             titles.add(title);
@@ -81,7 +80,23 @@ public class PositionAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.titileTv.setText(titles.get(position));
-        getCity();
+        getCity(viewHolder,position);
+
+        return convertView;
+    }
+
+    public void getCity(ViewHolder viewHolder,int position) {
+        List<String> cityLists = new ArrayList<>();//获取城市列表
+        //遍历map
+        Iterator<Map.Entry<String, String>> it = mMap.entrySet().iterator();
+        while (it.hasNext()){
+           Map.Entry<String,String> entry =  it.next();
+            cityLists.add(entry.getValue());
+        }
+        // 获取城市的信息
+        GetCityData cityList = new GetCityData(characterParser);
+        // 获得城市的数据列表
+        citylist = cityList.filledData(cityLists);
         //分类过的城市集合
         final List<String> list = new ArrayList<>();
         //分类城市
@@ -90,7 +105,8 @@ public class PositionAdapter extends BaseAdapter {
                 list.add(citys.getName());
             }
         }
-        PositionGridItemAdapter positionGridItemAdapter = new PositionGridItemAdapter(list,mContext);
+
+        PositionGridItemAdapter positionGridItemAdapter = new PositionGridItemAdapter(list,activity);
         viewHolder.myGridView.setAdapter(positionGridItemAdapter);
         positionGridItemAdapter.notifyDataSetInvalidated();
 
@@ -105,30 +121,19 @@ public class PositionAdapter extends BaseAdapter {
                     Map.Entry<String,String> entry =  it.next();
                     //根据value值来找对应的id、
                     if (list.get(position).equals(entry.getValue())){
-                        Intent intent = new Intent(mContext, ContentActivity.class);
+                        Intent intent = new Intent(activity, ContentActivity.class);
                         intent.putExtra("cityId",entry.getKey());
-                        mContext.startActivity(intent);
+                        intent.putExtra("cityName",entry.getValue());
+                        activity.startActivity(intent);
                         activity.finish();
                     }
                 }
             }
         });
-        return convertView;
     }
 
-    public void getCity() {
-        List<String> cityLists = new ArrayList<>();//获取城市列表
-        //遍历map
-        Iterator<Map.Entry<String, String>> it = mMap.entrySet().iterator();
-        while (it.hasNext()){
-           Map.Entry<String,String> entry =  it.next();
-            cityLists.add(entry.getValue());
-        }
-        // 获取城市的信息
-        GetCityData cityList = new GetCityData(characterParser);
-        // 获得城市的数据列表
-        citylist = cityList.filledData(cityLists);
-    }
+
+
 
     public final  class ViewHolder{
         private TextView titileTv;

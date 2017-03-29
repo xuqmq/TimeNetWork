@@ -6,10 +6,14 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
@@ -17,10 +21,10 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bowen.timenetwork.BaseFragment;
 import com.bowen.timenetwork.R;
+import com.bowen.timenetwork.adapter.HomeFragmentRecycleAdapter;
 import com.bowen.timenetwork.bean.HomeInfo;
 import com.bowen.timenetwork.tools.GsonTool;
 import com.bowen.timenetwork.tools.Url;
-import com.google.gson.Gson;
 
 
 import org.xutils.common.Callback;
@@ -41,6 +45,11 @@ public class HomeFragment extends BaseFragment {
     private OnFragmentInteractionListener mListener;
 
     private ConvenientBanner  banner;
+    private Button btnCityName;
+    private Button btnAllQuantity;
+    private Button btnAll;
+    private Button btnAlls;
+    private RecyclerView recyclerView;
 
 
     public HomeFragment() {
@@ -70,6 +79,13 @@ public class HomeFragment extends BaseFragment {
                                            Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         banner = (ConvenientBanner) view.findViewById(R.id.home_fragment_banner);
+        btnCityName = (Button) view.findViewById(R.id.btn_content_city_name);
+        btnAllQuantity = (Button) view.findViewById(R.id.btn_all_content);
+        btnAll = (Button) view.findViewById(R.id.btn_content_all);
+        btnAlls = (Button) view.findViewById(R.id.btn_content_alls);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rlv_content_fragment);
+        btnCityName.setText(mParam2);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         //网络请求
         inithttp();
         return view;
@@ -83,7 +99,6 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onSuccess(String result) {
                 HomeInfo homeDatas = GsonTool.parseJson2Object(result, HomeInfo.class);
-
                 initDataToView(homeDatas);
 
             }
@@ -102,10 +117,9 @@ public class HomeFragment extends BaseFragment {
     //初始化数据源
     private void initDataToView(HomeInfo homeInfo) {
         List<String> imageViewList = new ArrayList<>();
-        for (int i = 0 ; i < homeInfo.getMovies().size() ; i ++){
+        for (int i = 0 ; i < 6 ; i ++){
               imageViewList.add(homeInfo.getMovies().get(i).getImg());
         }
-
         banner.setPages(new CBViewHolderCreator<LocalImageHolderView>() {
             @Override
             public LocalImageHolderView createHolder() {
@@ -113,9 +127,16 @@ public class HomeFragment extends BaseFragment {
             }
         },imageViewList)
                 .setPageIndicator(new int []{R.drawable.home_point,R.drawable.home_point_f})//设置导航点
-                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);//设置导航方向
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)//设置导航点的位置
+                .startTurning(2000);//设置自动滚动
+        btnAlls.setText("共"+homeInfo.getTotalCinemaCount()+"部");
+        btnAll.setText("共"+homeInfo.getTotalComingMovie()+"部");
+        btnAllQuantity.setText("共"+homeInfo.getTotalHotMovie()+"部");
+        List<HomeInfo.MoviesBean> list = homeInfo.getMovies();
+        HomeFragmentRecycleAdapter homeFragmentRecycleAdapter = new HomeFragmentRecycleAdapter(getActivity(),list);
+        recyclerView.setAdapter(homeFragmentRecycleAdapter);
+        homeFragmentRecycleAdapter.notifyDataSetChanged();
     }
-
     public class LocalImageHolderView implements Holder<String> {
         private ImageView imageView;
         @Override
@@ -124,13 +145,12 @@ public class HomeFragment extends BaseFragment {
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             return imageView;
         }
-
         @Override
         public void UpdateUI(Context context, final int position,String url ) {
             x.image().bind(imageView,url);
-
         }
     }
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);

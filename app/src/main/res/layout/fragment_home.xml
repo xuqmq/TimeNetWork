@@ -1,10 +1,151 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <com.bigkoo.convenientbanner.ConvenientBanner
         android:id="@+id/home_fragment_banner"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"/>
+    <LinearLayout
+        android:id="@+id/ll_content_search"
+        android:orientation="horizontal"
+        android:background="@drawable/edittext_shape_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="140dp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+        <EditText
+            android:text="影片/影院/影人，任你搜"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:drawableLeft="@drawable/title_bar_search_zoomin"/>
+        <TextView
+            android:gravity="center"
+            android:background="#88888888"
+            android:layout_width="1dp"
+            android:layout_height="26dp"
+           />
+        <ImageButton
+            android:background="@drawable/comments_background"
+            android:src="@drawable/home_scan"
+            android:layout_weight="1"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rl_content_one"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/ll_content_search"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+        <TextView
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:id="@+id/tv_content_one"
+            android:layout_gravity="center_vertical"
+            android:textSize="15sp"
+            android:layout_marginLeft="15dp"
+            android:text="正在售票 . "
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <Button
+            android:textSize="15sp"
+            android:id="@+id/btn_content_city_name"
+            android:layout_toRightOf="@+id/tv_content_one"
+            android:background="@drawable/comments_background"
+            android:text="北京"
+            android:drawableRight="@drawable/rate_down"
+            android:layout_width="100dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/btn_all_content"
+            android:text="共43部"
+            android:textSize="15sp"
+            android:paddingRight="15dp"
+            android:drawableRight="@drawable/unit_arrow"
+            android:background="@drawable/comments_background"
+            android:layout_alignParentRight="true"
+            android:layout_width="100dp"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rlv_content_fragment"
+        android:layout_below="@+id/rl_content_one"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
-</FrameLayout>
+    <View
+        android:background="#88888888"
+        android:layout_below="@+id/rlv_content_fragment"
+        android:id="@+id/view1"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_vertical"
+            android:textSize="15sp"
+            android:layout_marginLeft="15dp"
+            android:text="即将上映 . "
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:id="@+id/btn_content_all"
+            android:background="@drawable/comments_background"
+            android:text="北京"
+            android:drawableRight="@drawable/icon_arrow_right_small"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <View
+            android:layout_marginLeft="5dp"
+            android:background="#88888888"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_vertical"
+            android:textSize="15sp"
+            android:layout_marginLeft="15dp"
+            android:text="同城影院 . "
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:id="@+id/btn_content_alls"
+            android:background="@drawable/comments_background"
+            android:text="北京"
+            android:drawableRight="@drawable/icon_arrow_right_small"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <View
+        android:background="#88888888"
+        android:layout_below="@+id/ll"
+        android:id="@+id/view2"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+</RelativeLayout>
+</ScrollView>
