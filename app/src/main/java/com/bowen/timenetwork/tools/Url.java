@@ -6,4 +6,5 @@ package com.bowen.timenetwork.tools;
 public class Url {
     public static final String CITI_URL ="https://api-m.mtime.cn/Showtime/HotCitiesByCinema.api";//城市url
     public static final String CITY_CONTENT = "https://api-m.mtime.cn/PageSubArea/HotPlayMovies.api?locationId=";
+    public static final String  LOCATION_MOVIE_ID ="https://api-m.mtime.cn/Showtime/LocationMovies.api?locationId=";
 }

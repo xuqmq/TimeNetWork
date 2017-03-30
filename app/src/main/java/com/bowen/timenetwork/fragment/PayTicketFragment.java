@@ -3,13 +3,35 @@ package com.bowen.timenetwork.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
 
 import com.bowen.timenetwork.BaseFragment;
 import com.bowen.timenetwork.R;
+import com.bowen.timenetwork.adapter.GuideAdapter;
+import com.bowen.timenetwork.adapter.PaytictelViewOneAdapter;
+import com.bowen.timenetwork.bean.PayticketInfo;
+import com.bowen.timenetwork.tools.GsonTool;
+import com.bowen.timenetwork.tools.Url;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,35 +42,38 @@ import com.bowen.timenetwork.R;
  * create an instance of this fragment.
  */
 public class PayTicketFragment extends BaseFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String mParam3;
+    private  TabLayout tableLayout;
+    private ViewPager viewPager;
+    private LayoutInflater mInflater;
+    private RadioGroup group;
+    private LinearLayout lldisplay;
+    private RecyclerView recyclerView;
+    private Button btnCityName;
+
 
     private OnFragmentInteractionListener mListener;
+    private View viewOne;
+    private View viewTwo;
 
     public PayTicketFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
+
     public static PayTicketFragment newInstance(String param1, String param2) {
         PayTicketFragment fragment = new PayTicketFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,11 +90,92 @@ public class PayTicketFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_pay_ticket, container, false);
+        initView(view);//初始化ui
+        group.check(R.id.rbnt_pay_ticket_film);
+        initLisener();//监听事件
+        initData();//初始化数据
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    private void initView(View view) {
+        tableLayout = (TabLayout) view.findViewById(R.id.tab_layout_pay);
+        viewPager = (ViewPager) view.findViewById(R.id.vp_pay_ticket);
+        group = (RadioGroup) view.findViewById(R.id.rg_pay_ticket);
+        lldisplay = (LinearLayout) view.findViewById(R.id.ll_pay_ticket_display);
+        btnCityName = (Button) view.findViewById(R.id.btn_pay_ticket_city_name);
+        mInflater = LayoutInflater.from(getContext());
+        viewOne = mInflater.inflate(R.layout.title_layout_one,null);
+        recyclerView = (RecyclerView) viewOne.findViewById(R.id.rlv_view_one);
+        viewTwo = mInflater.inflate(R.layout.title_layout_two,null);
+        tableLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        btnCityName.setText(mParam2);//
+    }
+
+    private void initLisener() {
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.rbnt_pay_ticket_film:
+                        lldisplay.setVisibility(View.VISIBLE);
+                        break;
+                    case R.id.rbtn_pay_ticket_cinema:
+                        break;
+                }
+            }
+        });
+    }
+
+    private void initData() {
+        List<String> titles = new ArrayList<>();
+        titles.add("正在热映");
+        titles.add("即将上映");
+        List<View> titleView = new ArrayList<>();
+        titleView.add(viewOne);
+        titleView.add(viewTwo);
+
+        GuideAdapter guideAdapter = new GuideAdapter(titleView,titles);
+        viewPager.setAdapter(guideAdapter);
+        tableLayout.setupWithViewPager(viewPager);
+        guideAdapter.notifyDataSetChanged();
+
+        //网络请求数据
+        String url = Url.LOCATION_MOVIE_ID + mParam1;
+        RequestParams params = new RequestParams(url);
+        x.http().get(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                PayticketInfo payticketInfo = GsonTool.parseJson2Object(result,PayticketInfo.class);
+                initViewPagerOneData(payticketInfo);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    //第一个viewOne数据
+    private void initViewPagerOneData(PayticketInfo payticketInfo) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        PaytictelViewOneAdapter paytictelViewOneAdapter = new PaytictelViewOneAdapter(getContext(),payticketInfo.getMs(),payticketInfo.getDate());
+        recyclerView.setAdapter(paytictelViewOneAdapter);
+        paytictelViewOneAdapter.notifyDataSetChanged();
+    }
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -94,16 +200,6 @@ public class PayTicketFragment extends BaseFragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

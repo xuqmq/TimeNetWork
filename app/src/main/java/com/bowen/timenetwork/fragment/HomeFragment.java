@@ -143,6 +143,7 @@ public class HomeFragment extends BaseFragment {
         public View createView(Context context) {
             imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setAdjustViewBounds(true);
             return imageView;
         }
         @Override

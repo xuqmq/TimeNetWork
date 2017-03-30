@@ -11,8 +11,13 @@ import java.util.List;
  */
 public class GuideAdapter extends PagerAdapter {
     private List<View> list;
+    private List<String> title;
     public  GuideAdapter(List<View> list){
         this.list = list;
+    }
+    public  GuideAdapter(List<View> list,List<String> title){
+        this.list = list;
+        this.title = title;
     }
     @Override
     public int getCount() {
@@ -36,5 +41,10 @@ public class GuideAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView(list.get(position));
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return title.get(position);
     }
 }

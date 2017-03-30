@@ -58,7 +58,7 @@ public class ContentActivity extends MainActivity {
                         break;
                     case R.id.rb_paytikel_content:
                         if (payTicketFragment == null){
-                            payTicketFragment = PayTicketFragment.newInstance(null,null);
+                            payTicketFragment = PayTicketFragment.newInstance(cityId,cityName);
                             fragmentTransaction.add(R.id.fl_content,payTicketFragment);
                         }else {
                             fragmentTransaction.show(payTicketFragment);
