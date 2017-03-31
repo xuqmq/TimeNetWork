@@ -48,7 +48,7 @@ public class HomeFragmentRecycleAdapter  extends RecyclerView.Adapter<HomeFragme
         Time t = new Time();
         t.setToNow();
         if (mList.get(position).getRYear() <= t.year && mList.get(position).getRMonth() <= t.month +1
-                && mList.get(position).getRDay() <= t.monthDay){
+                && mList.get(position).getRDay() <= t.monthDay && mList.get(position).getRatingFinal() > 0){
             holder.tvRating.setVisibility(View.VISIBLE);
             holder.tvRating.setText(mList.get(position).getRatingFinal()+"");
             holder.btnPay.setBackgroundResource(R.drawable.bt_solid_orange_66);

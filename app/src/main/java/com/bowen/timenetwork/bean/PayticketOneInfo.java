@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/3/30 0030.
  */
-public class PayticketInfo {
+public class PayticketOneInfo {
 
     /**
      * bImg : http://img5.mtime.cn/mg/2017/03/29/095126.76693416.jpg

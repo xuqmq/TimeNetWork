@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/ll_two_item"
+        android:orientation="horizontal"
+        android:layout_width="300dp"
+        android:layout_height="30dp">
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:textSize="15sp"
+        android:text="5555"
+        android:layout_width="50dp"
+        android:layout_height="match_parent" />
+    <ImageView
+        android:layout_gravity="center"
+        android:src="@drawable/icon_line_recycler_item_read"
+        android:layout_width="150dp"
+        android:layout_height="match_parent" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/iv_two_item"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@+id/ll_two_item"
+        android:layout_width="100dp"
+        android:layout_height="150dp" />
+    <LinearLayout
+        android:id="@+id/ll_two_to"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/iv_two_item"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@+id/ll_two_item"
+        android:layout_width="200dp"
+        android:layout_height="150dp">
+        <TextView
+            android:text="1111"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="1111"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="1111"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+    <ImageView
+        android:layout_toRightOf="@+id/ll_two_to"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp" />
+</RelativeLayout>

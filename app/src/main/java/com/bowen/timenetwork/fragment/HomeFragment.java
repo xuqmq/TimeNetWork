@@ -86,15 +86,16 @@ public class HomeFragment extends BaseFragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.rlv_content_fragment);
         btnCityName.setText(mParam2);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+
         //网络请求
         inithttp();
         return view;
     }
 
     private void inithttp() {
+        //正在热映
         String url = Url.CITY_CONTENT + mParam1;
         RequestParams params = new RequestParams(url);
-
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -112,6 +113,8 @@ public class HomeFragment extends BaseFragment {
             public void onFinished() {
             }
         });
+
+
     }
 
     //初始化数据源

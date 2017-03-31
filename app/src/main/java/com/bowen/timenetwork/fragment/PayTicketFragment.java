@@ -8,13 +8,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 
@@ -22,7 +20,9 @@ import com.bowen.timenetwork.BaseFragment;
 import com.bowen.timenetwork.R;
 import com.bowen.timenetwork.adapter.GuideAdapter;
 import com.bowen.timenetwork.adapter.PaytictelViewOneAdapter;
-import com.bowen.timenetwork.bean.PayticketInfo;
+import com.bowen.timenetwork.adapter.PaytictelViewTwoAdapter;
+import com.bowen.timenetwork.bean.PayticketOneInfo;
+import com.bowen.timenetwork.bean.PayticketTwoInfo;
 import com.bowen.timenetwork.tools.GsonTool;
 import com.bowen.timenetwork.tools.Url;
 
@@ -54,13 +54,16 @@ public class PayTicketFragment extends BaseFragment {
     private LayoutInflater mInflater;
     private RadioGroup group;
     private LinearLayout lldisplay;
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerViewOne;
+    private RecyclerView recyclerViewTwo;
+    private RecyclerView recyclerViewTwoTo;
     private Button btnCityName;
 
 
     private OnFragmentInteractionListener mListener;
     private View viewOne;
     private View viewTwo;
+
 
     public PayTicketFragment() {
         // Required empty public constructor
@@ -105,9 +108,14 @@ public class PayTicketFragment extends BaseFragment {
         lldisplay = (LinearLayout) view.findViewById(R.id.ll_pay_ticket_display);
         btnCityName = (Button) view.findViewById(R.id.btn_pay_ticket_city_name);
         mInflater = LayoutInflater.from(getContext());
+
         viewOne = mInflater.inflate(R.layout.title_layout_one,null);
-        recyclerView = (RecyclerView) viewOne.findViewById(R.id.rlv_view_one);
+        recyclerViewOne = (RecyclerView) viewOne.findViewById(R.id.rlv_view_one);
         viewTwo = mInflater.inflate(R.layout.title_layout_two,null);
+        recyclerViewTwo = (RecyclerView) viewTwo.findViewById(R.id.rlv_view_two);
+        recyclerViewTwoTo = (RecyclerView) viewTwo.findViewById(R.id.rlv_view_two_to);
+
+
         tableLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         btnCityName.setText(mParam2);//
@@ -142,25 +150,45 @@ public class PayTicketFragment extends BaseFragment {
         guideAdapter.notifyDataSetChanged();
 
         //网络请求数据
-        String url = Url.LOCATION_MOVIE_ID + mParam1;
-        RequestParams params = new RequestParams(url);
+        initHttp();
+
+
+    }
+
+    private void initHttp() {
+        String urlOne = Url.LOCATION_MOVIE_ID + mParam1;
+        RequestParams params = new RequestParams(urlOne);
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                PayticketInfo payticketInfo = GsonTool.parseJson2Object(result,PayticketInfo.class);
+                PayticketOneInfo payticketInfo = GsonTool.parseJson2Object(result,PayticketOneInfo.class);
                 initViewPagerOneData(payticketInfo);
             }
-
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
             }
-
             @Override
             public void onCancelled(CancelledException cex) {
+            }
+            @Override
+            public void onFinished() {
 
             }
-
+        });
+        String urlTwo = Url.MOVIE_COMING_NEW + mParam1;
+        RequestParams param = new RequestParams(urlTwo);
+        x.http().get(param, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                PayticketTwoInfo payticketTwoInfo = GsonTool.parseJson2Object(result,PayticketTwoInfo.class);
+                initViewPagerTwoData(payticketTwoInfo);
+            }
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+            }
+            @Override
+            public void onCancelled(CancelledException cex) {
+            }
             @Override
             public void onFinished() {
 
@@ -168,11 +196,25 @@ public class PayTicketFragment extends BaseFragment {
         });
     }
 
+    //第二个viewTwo数据
+    private void initViewPagerTwoData(PayticketTwoInfo payticketTwoInfo) {
+        recyclerViewTwo.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+        PaytictelViewTwoAdapter paytictelViewTwoAdapter = new PaytictelViewTwoAdapter(getContext(),payticketTwoInfo.getAttention());
+        recyclerViewTwo.setAdapter(paytictelViewTwoAdapter);
+        paytictelViewTwoAdapter.notifyDataSetChanged();
+
+        recyclerViewTwoTo.setLayoutManager(new LinearLayoutManager(getContext()));
+        PaytictelViewTwoAdapter paytictelViewTwoAdapterTo = new PaytictelViewTwoAdapter(getContext(),payticketTwoInfo.getAttention());
+        recyclerViewTwoTo.setAdapter(paytictelViewTwoAdapterTo);
+        paytictelViewTwoAdapter.notifyDataSetChanged();
+    }
+
     //第一个viewOne数据
-    private void initViewPagerOneData(PayticketInfo payticketInfo) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        PaytictelViewOneAdapter paytictelViewOneAdapter = new PaytictelViewOneAdapter(getContext(),payticketInfo.getMs(),payticketInfo.getDate());
-        recyclerView.setAdapter(paytictelViewOneAdapter);
+    private void initViewPagerOneData(PayticketOneInfo payticketInfo) {
+        recyclerViewOne.setLayoutManager(new LinearLayoutManager(getContext()));
+        PaytictelViewOneAdapter paytictelViewOneAdapter =
+                new PaytictelViewOneAdapter(getContext(),payticketInfo.getMs(),payticketInfo.getDate());
+        recyclerViewOne.setAdapter(paytictelViewOneAdapter);
         paytictelViewOneAdapter.notifyDataSetChanged();
     }
 
