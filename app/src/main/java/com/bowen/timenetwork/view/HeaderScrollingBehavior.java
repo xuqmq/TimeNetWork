@@ -38,7 +38,7 @@ public class HeaderScrollingBehavior extends CoordinatorLayout.Behavior<Recycler
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, RecyclerView child, View dependency) {
-        if (dependency != null && dependency.getId() == R.id.ll_header_two) {
+        if (dependency != null && dependency.getId() == R.id.rlv_header_two) {
             dependentView = new WeakReference<>(dependency);
             return true;
         }
@@ -73,12 +73,14 @@ public class HeaderScrollingBehavior extends CoordinatorLayout.Behavior<Recycler
     }
 
     @Override
-    public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, RecyclerView child, View directTargetChild, View target, int nestedScrollAxes) {
+    public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, RecyclerView child,
+                                       View directTargetChild, View target, int nestedScrollAxes) {
         return (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
     }
 
     @Override
-    public void onNestedScrollAccepted(CoordinatorLayout coordinatorLayout, RecyclerView child, View directTargetChild, View target, int nestedScrollAxes) {
+    public void onNestedScrollAccepted(CoordinatorLayout coordinatorLayout, RecyclerView child,
+                                       View directTargetChild, View target, int nestedScrollAxes) {
         scroller.abortAnimation();
         isScrolling = false;
 
@@ -102,7 +104,8 @@ public class HeaderScrollingBehavior extends CoordinatorLayout.Behavior<Recycler
     }
 
     @Override
-    public void onNestedScroll(CoordinatorLayout coordinatorLayout, RecyclerView child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+    public void onNestedScroll(CoordinatorLayout coordinatorLayout, RecyclerView child, View target,
+                               int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
         if (dyUnconsumed > 0) {
             return;
         }

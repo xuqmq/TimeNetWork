@@ -6,38 +6,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.PositioningActivity">
-<LinearLayout
-    android:id="@+id/ll_header_two"
-    android:orientation="vertical"
+<RelativeLayout
+    android:id="@+id/rlv_header_two"
     android:layout_width="match_parent"
-    android:layout_height="280dp">
+    android:layout_height="wrap_content">
     <TextView
-        android:text="5555"
+        android:id="@+id/tv_tv"
+        android:layout_marginLeft="8dp"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/black"
+        android:text="最受关注"
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        android:layout_height="30dp" />
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/tv_tv"
         android:id="@+id/rlv_view_two"
         android:layout_width="match_parent"
-        android:layout_height="180dp"/>
+        android:layout_height="170dp"/>
     <ImageView
+        android:layout_below="@+id/rlv_view_two"
+        android:layout_marginTop="10dp"
+        android:id="@+id/iv_view_two"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="100dp" />
     <TextView
-        android:text="5555"
+        android:layout_below="@+id/iv_view_two"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:text="即将上映（43部）"
         android:layout_width="match_parent"
         android:layout_height="20dp" />
-</LinearLayout>
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        app:layout_behavior="@string/header_float_behavior"
-        >
+</RelativeLayout>
         <TextView
-            android:text="2222222"
+            android:id="@+id/tv_pay_ticket_month"
+            android:layout_marginLeft="5dp"
+            app:layout_behavior="@string/header_float_behavior"
+            android:gravity="center_vertical"
+            android:text="4月"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            android:layout_height="20dp" />
+
     <android.support.v7.widget.RecyclerView
         app:layout_behavior="@string/header_scrolling_behavior"
         android:id="@+id/rlv_view_two_to"

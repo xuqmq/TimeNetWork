@@ -1,6 +1,7 @@
 package com.bowen.timenetwork.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bowen.timenetwork.BaseFragment;
 import com.bowen.timenetwork.R;
+import com.bowen.timenetwork.activity.DetailsActivity;
 import com.bowen.timenetwork.adapter.HomeFragmentRecycleAdapter;
 import com.bowen.timenetwork.bean.HomeInfo;
 import com.bowen.timenetwork.tools.GsonTool;
@@ -135,10 +137,20 @@ public class HomeFragment extends BaseFragment {
         btnAlls.setText("共"+homeInfo.getTotalCinemaCount()+"部");
         btnAll.setText("共"+homeInfo.getTotalComingMovie()+"部");
         btnAllQuantity.setText("共"+homeInfo.getTotalHotMovie()+"部");
-        List<HomeInfo.MoviesBean> list = homeInfo.getMovies();
+        final List<HomeInfo.MoviesBean> list = homeInfo.getMovies();
         HomeFragmentRecycleAdapter homeFragmentRecycleAdapter = new HomeFragmentRecycleAdapter(getActivity(),list);
         recyclerView.setAdapter(homeFragmentRecycleAdapter);
         homeFragmentRecycleAdapter.notifyDataSetChanged();
+
+        //recycleView条目的监听事件
+        homeFragmentRecycleAdapter.setOnItemClickListener(new HomeFragmentRecycleAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(getContext(), DetailsActivity.class);
+                intent.putExtra("movieId",list.get(position).getMovieId()+"");
+                startActivity(intent);
+            }
+        });
     }
     public class LocalImageHolderView implements Holder<String> {
         private ImageView imageView;
@@ -179,16 +191,6 @@ public class HomeFragment extends BaseFragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

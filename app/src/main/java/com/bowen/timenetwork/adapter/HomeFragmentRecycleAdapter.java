@@ -21,25 +21,43 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/3/29 0029.
  */
-public class HomeFragmentRecycleAdapter  extends RecyclerView.Adapter<HomeFragmentRecycleAdapter.MyViewHolder>{
+public class HomeFragmentRecycleAdapter  extends RecyclerView.Adapter<HomeFragmentRecycleAdapter.MyViewHolder> implements View.OnClickListener{
 
     private Context mContext;
     private List<HomeInfo.MoviesBean> mList ;
     private LayoutInflater mInflater;
+
     public HomeFragmentRecycleAdapter(Context mContext,List<HomeInfo.MoviesBean> mList ){
         this.mContext = mContext;
         this.mList = mList ;
         mInflater = LayoutInflater.from(mContext);
     }
+    private OnItemClickListener onItemClickListener = null;
+
+    @Override
+    public void onClick(View view) {
+        if (onItemClickListener != null) {
+            //注意这里使用getTag方法获取数据
+            onItemClickListener.onClick(view, (Integer) view.getTag());
+        }
+    }
+    public interface OnItemClickListener{
+        void onClick(View view,int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
+    }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.recycle_item_fragment,parent,false);
+
+        view.setOnClickListener(this);
         MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder,  int position) {
         x.image().bind(holder.iv,mList.get(position).getImg());
         holder.tvName.setText(mList.get(position).getTitleCn());
         if (mList.get(position).isIsIMAX3D()){
@@ -58,6 +76,7 @@ public class HomeFragmentRecycleAdapter  extends RecyclerView.Adapter<HomeFragme
             holder.btnPay.setBackgroundResource(R.drawable.bt_solid_green_66);
             holder.btnPay.setText("预售");
         }
+        holder.itemView.setTag(position);
     }
 
     @Override

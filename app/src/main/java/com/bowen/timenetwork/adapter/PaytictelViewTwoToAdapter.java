@@ -2,38 +2,34 @@ package com.bowen.timenetwork.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bowen.timenetwork.R;
-import com.bowen.timenetwork.bean.PayticketOneInfo;
 import com.bowen.timenetwork.bean.PayticketTwoInfo;
-
 import org.xutils.x;
-
-import java.util.Calendar;
 import java.util.List;
 
 
 /**
  * Created by Administrator on 2017/3/30 0030.
  */
-public class PaytictelViewTwoAdapter extends RecyclerView.Adapter<PaytictelViewTwoAdapter.MyViewOneHolder> implements View.OnClickListener{
+public class PaytictelViewTwoToAdapter extends RecyclerView.Adapter<PaytictelViewTwoToAdapter.MyViewOneHolder> implements View.OnClickListener {
 
     private Context mContext;
     private LayoutInflater mInflater;
-    private List<PayticketTwoInfo.AttentionBean> mList;
-    public PaytictelViewTwoAdapter(Context mContext, List<PayticketTwoInfo.AttentionBean> mList){
+    private List<PayticketTwoInfo.MoviecomingsBean> mList;
+    private TextView tvMonth;
+    public PaytictelViewTwoToAdapter(Context mContext, List<PayticketTwoInfo.MoviecomingsBean> mList,TextView tvMonth){
         this.mContext = mContext;
         mInflater = LayoutInflater.from(mContext);
         this.mList = mList;
-
+        this.tvMonth = tvMonth;
     }
+
 
     private OnItemClickListener onItemClickListener;
 
@@ -52,24 +48,20 @@ public class PaytictelViewTwoAdapter extends RecyclerView.Adapter<PaytictelViewT
     }
     @Override
     public MyViewOneHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.view_two_adapter_item,parent,false);
+        View view = mInflater.inflate(R.layout.view_two_adapter_to_item,parent,false);
+        view.setOnClickListener(this);
         MyViewOneHolder holder = new MyViewOneHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(MyViewOneHolder holder,  int position) {
+    public void onBindViewHolder(MyViewOneHolder holder, int position) {
         x.image().bind(holder.iv,mList.get(position).getImage());
-        holder.tvMonth.setText(mList.get(position).getRMonth()+"月"+mList.get(position).getRDay()+"日");
+        holder.tvDay.setText(mList.get(position).getRDay()+"日");
         holder.tvName.setText(mList.get(position).getTitle());
-        holder.tvType.setText(mList.get(position).getWantedCount()+"人想看-"+mList.get(position).getType());
+        holder.tvType.setText(mList.get(position).getWantedCount()+"人想看-"+
+            mList.get(position).getType());
         holder.tvDirector.setText("导演："+mList.get(position).getDirector());
-        holder.tvActor.setText("演员："+mList.get(position).getActor1()+","+mList.get(position).getActor2());
-
-
-        holder.btnTwo.setText("预告片");
-        holder.btnTwo.setBackgroundResource(R.drawable.actor_detail_unlike_background_on);
-        Calendar c = Calendar.getInstance();
         if (mList.get(position).isIsTicket()){
             holder.btnOne.setText("超前预售");
             holder.btnOne.setBackgroundResource(R.drawable.bt_solid_green_66);
@@ -77,8 +69,12 @@ public class PaytictelViewTwoAdapter extends RecyclerView.Adapter<PaytictelViewT
             holder.btnOne.setText("上映提醒");
             holder.btnOne.setBackgroundResource(R.drawable.actor_detail_unlike_background_on);
         }
-      holder.itemView.setTag(position);
+            holder.btnTwo.setText("预告片");
+            holder.btnTwo.setBackgroundResource(R.drawable.actor_detail_unlike_background_on);
+        tvMonth.setText(mList.get(position).getRMonth()+"月");
+        holder.itemView.setTag(position);
     }
+
 
     @Override
     public int getItemCount() {
@@ -87,24 +83,22 @@ public class PaytictelViewTwoAdapter extends RecyclerView.Adapter<PaytictelViewT
 
     class MyViewOneHolder extends RecyclerView.ViewHolder{
         private ImageView iv;
+        private TextView tvDay;
         private TextView tvName;
         private TextView tvType;
         private TextView tvDirector;
-        private TextView tvActor;
-        private TextView tvMonth;
         private Button btnOne;
         private Button btnTwo;
 
         public MyViewOneHolder(View itemView) {
             super(itemView);
-            iv = (ImageView) itemView.findViewById(R.id.iv_two_item);
-            tvName  = (TextView) itemView.findViewById(R.id.tv_two_item_name);
-            tvType  = (TextView) itemView.findViewById(R.id.tv_two_item_type);
-            tvDirector  = (TextView) itemView.findViewById(R.id.tv_two_item_director);
-            tvActor  = (TextView) itemView.findViewById(R.id.tv_two_item_actor);
-            tvMonth  = (TextView) itemView.findViewById(R.id.tv_two_item_month);
-            btnOne  = (Button) itemView.findViewById(R.id.btn_two_one);
-            btnTwo  = (Button) itemView.findViewById(R.id.btn_two_two);
+            iv = (ImageView) itemView.findViewById(R.id.iv_two_item_to);
+            tvDay = (TextView) itemView.findViewById(R.id.tv_two_to_day);
+            tvName = (TextView) itemView.findViewById(R.id.tv_two_item_name_to);
+            tvType = (TextView) itemView.findViewById(R.id.tv_two_item_type_to);
+            tvDirector = (TextView) itemView.findViewById(R.id.tv_two_item_director_to);
+            btnOne  = (Button) itemView.findViewById(R.id.btn_two_one_to);
+            btnTwo  = (Button) itemView.findViewById(R.id.btn_two_two_to);
         }
     }
 }

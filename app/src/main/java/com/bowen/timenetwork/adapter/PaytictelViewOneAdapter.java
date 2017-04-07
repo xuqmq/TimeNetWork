@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/3/30 0030.
  */
-public class PaytictelViewOneAdapter extends RecyclerView.Adapter<PaytictelViewOneAdapter.MyViewOneHolder>{
+public class PaytictelViewOneAdapter extends RecyclerView.Adapter<PaytictelViewOneAdapter.MyViewOneHolder> implements View.OnClickListener{
 
     private Context mContext;
     private LayoutInflater mInflater;
@@ -32,16 +32,31 @@ public class PaytictelViewOneAdapter extends RecyclerView.Adapter<PaytictelViewO
         this.mList = mList;
         this.date = date;
     }
+    private OnItemClickListener onItemClickListener;
 
+    @Override
+    public void onClick(View v) {
+        if (onItemClickListener != null){
+            onItemClickListener.onClick(v, (Integer) v.getTag());
+        }
+    }
+
+    public interface OnItemClickListener{
+        void onClick(View view,int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
+    }
     @Override
     public MyViewOneHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.view_one_adapter_item,parent,false);
+        view.setOnClickListener(this);
         MyViewOneHolder holder = new MyViewOneHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(MyViewOneHolder holder, int position) {
+    public void onBindViewHolder(MyViewOneHolder holder,  int position) {
         x.image().bind(holder.iv,mList.get(position).getImg());
         holder.tvMoveName.setText(mList.get(position).getTCn());
         holder.tvSpecial.setText("“"+mList.get(position).getCommonSpecial());
@@ -79,6 +94,7 @@ public class PaytictelViewOneAdapter extends RecyclerView.Adapter<PaytictelViewO
             holder.ivLarget.setVisibility(View.VISIBLE);
         }
         }
+        holder.itemView.setTag(position);
     }
 
     @Override

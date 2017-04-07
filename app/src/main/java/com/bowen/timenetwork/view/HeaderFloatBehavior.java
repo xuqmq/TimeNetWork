@@ -28,7 +28,7 @@ public class HeaderFloatBehavior extends CoordinatorLayout.Behavior<View> {
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
-        if (dependency != null && dependency.getId() == R.id.ll_header_two) {
+        if (dependency != null && dependency.getId() == R.id.rlv_header_two) {
             dependentView = new WeakReference<>(dependency);
             return true;
         }

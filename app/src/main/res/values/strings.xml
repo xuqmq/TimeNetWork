@@ -6,4 +6,7 @@
 
     <string name="header_scrolling_behavior">com.bowen.timenetwork.view.HeaderScrollingBehavior</string>
     <string name="header_float_behavior">com.bowen.timenetwork.view.HeaderFloatBehavior</string>
+
+    <string name="expand_string">更多</string>
+    <string name="collapsed_string">收起</string>
 </resources>

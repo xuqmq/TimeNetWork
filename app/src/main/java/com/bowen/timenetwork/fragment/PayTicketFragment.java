@@ -1,6 +1,7 @@
 package com.bowen.timenetwork.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,19 +9,25 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 
 import com.bowen.timenetwork.BaseFragment;
 import com.bowen.timenetwork.R;
+import com.bowen.timenetwork.activity.DetailsActivity;
 import com.bowen.timenetwork.adapter.GuideAdapter;
 import com.bowen.timenetwork.adapter.PaytictelViewOneAdapter;
 import com.bowen.timenetwork.adapter.PaytictelViewTwoAdapter;
+import com.bowen.timenetwork.adapter.PaytictelViewTwoToAdapter;
 import com.bowen.timenetwork.bean.PayticketOneInfo;
 import com.bowen.timenetwork.bean.PayticketTwoInfo;
 import com.bowen.timenetwork.tools.GsonTool;
@@ -48,7 +55,6 @@ public class PayTicketFragment extends BaseFragment {
 
     private String mParam1;
     private String mParam2;
-    private String mParam3;
     private  TabLayout tableLayout;
     private ViewPager viewPager;
     private LayoutInflater mInflater;
@@ -58,11 +64,13 @@ public class PayTicketFragment extends BaseFragment {
     private RecyclerView recyclerViewTwo;
     private RecyclerView recyclerViewTwoTo;
     private Button btnCityName;
+    private ImageView ivTwo;
 
 
     private OnFragmentInteractionListener mListener;
     private View viewOne;
     private View viewTwo;
+    private TextView tvMonth;
 
 
     public PayTicketFragment() {
@@ -95,9 +103,9 @@ public class PayTicketFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pay_ticket, container, false);
         initView(view);//初始化ui
-        group.check(R.id.rbnt_pay_ticket_film);
         initLisener();//监听事件
         initData();//初始化数据
+        group.check(R.id.rbnt_pay_ticket_film);
         return view;
     }
 
@@ -114,6 +122,8 @@ public class PayTicketFragment extends BaseFragment {
         viewTwo = mInflater.inflate(R.layout.title_layout_two,null);
         recyclerViewTwo = (RecyclerView) viewTwo.findViewById(R.id.rlv_view_two);
         recyclerViewTwoTo = (RecyclerView) viewTwo.findViewById(R.id.rlv_view_two_to);
+        ivTwo = (ImageView) viewTwo.findViewById(R.id.iv_view_two);
+        tvMonth = (TextView) viewTwo.findViewById(R.id.tv_pay_ticket_month);
 
 
         tableLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -130,6 +140,7 @@ public class PayTicketFragment extends BaseFragment {
                         lldisplay.setVisibility(View.VISIBLE);
                         break;
                     case R.id.rbtn_pay_ticket_cinema:
+                        lldisplay.setVisibility(View.GONE);
                         break;
                 }
             }
@@ -197,25 +208,64 @@ public class PayTicketFragment extends BaseFragment {
     }
 
     //第二个viewTwo数据
-    private void initViewPagerTwoData(PayticketTwoInfo payticketTwoInfo) {
+    private void initViewPagerTwoData(final PayticketTwoInfo payticketTwoInfo) {
+
         recyclerViewTwo.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         PaytictelViewTwoAdapter paytictelViewTwoAdapter = new PaytictelViewTwoAdapter(getContext(),payticketTwoInfo.getAttention());
         recyclerViewTwo.setAdapter(paytictelViewTwoAdapter);
         paytictelViewTwoAdapter.notifyDataSetChanged();
 
         recyclerViewTwoTo.setLayoutManager(new LinearLayoutManager(getContext()));
-        PaytictelViewTwoAdapter paytictelViewTwoAdapterTo = new PaytictelViewTwoAdapter(getContext(),payticketTwoInfo.getAttention());
-        recyclerViewTwoTo.setAdapter(paytictelViewTwoAdapterTo);
-        paytictelViewTwoAdapter.notifyDataSetChanged();
+        PaytictelViewTwoToAdapter paytictelViewTwoToAdapterTo =
+                new PaytictelViewTwoToAdapter(getContext(),payticketTwoInfo.getMoviecomings(),tvMonth);
+        recyclerViewTwoTo.setAdapter(paytictelViewTwoToAdapterTo);
+        paytictelViewTwoToAdapterTo.notifyDataSetChanged();
+
+        paytictelViewTwoAdapter.setOnItemClickListener(new PaytictelViewTwoAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(getContext(), DetailsActivity.class);
+                intent.putExtra("movieId",payticketTwoInfo.getAttention().get(position).getId()+"");
+                startActivity(intent);
+            }
+        });
+        recyclerViewTwoTo.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                    Log.d("aaa", "onTouch:212131313131 ");
+                }
+                return false;
+            }
+        });
+        paytictelViewTwoToAdapterTo.setOnItemClickListener(new PaytictelViewTwoToAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(getContext(), DetailsActivity.class);
+                intent.putExtra("movieId",payticketTwoInfo.getMoviecomings().get(position).getId()+"");
+                startActivity(intent);
+            }
+        });
+
     }
 
     //第一个viewOne数据
-    private void initViewPagerOneData(PayticketOneInfo payticketInfo) {
+    private void initViewPagerOneData(final PayticketOneInfo payticketInfo) {
+        x.image().bind(ivTwo,payticketInfo.getBImg());
         recyclerViewOne.setLayoutManager(new LinearLayoutManager(getContext()));
         PaytictelViewOneAdapter paytictelViewOneAdapter =
                 new PaytictelViewOneAdapter(getContext(),payticketInfo.getMs(),payticketInfo.getDate());
         recyclerViewOne.setAdapter(paytictelViewOneAdapter);
         paytictelViewOneAdapter.notifyDataSetChanged();
+
+        paytictelViewOneAdapter.setOnItemClickListener(new PaytictelViewOneAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(getContext(), DetailsActivity.class);
+                intent.putExtra("movieId",payticketInfo.getMs().get(position).getId()+"");
+                startActivity(intent);
+            }
+        });
     }
 
     public void onButtonPressed(Uri uri) {

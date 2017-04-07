@@ -21,7 +21,8 @@
         </activity>
         <activity android:name=".activity.GuideActivity" />
         <activity android:name=".activity.PositioningActivity" />
-        <activity android:name=".activity.ContentActivity"></activity>
+        <activity android:name=".activity.ContentActivity" />
+        <activity android:name=".activity.DetailsActivity"></activity>
     </application>
 
 </manifest>
