@@ -22,7 +22,9 @@
         <activity android:name=".activity.GuideActivity" />
         <activity android:name=".activity.PositioningActivity" />
         <activity android:name=".activity.ContentActivity" />
-        <activity android:name=".activity.DetailsActivity"></activity>
+        <activity android:name=".activity.DetailsActivity" />
+        <activity android:name=".activity.VideoActivity"/>
+        <activity android:name=".activity.PictureActivity"/>
     </application>
 
 </manifest>

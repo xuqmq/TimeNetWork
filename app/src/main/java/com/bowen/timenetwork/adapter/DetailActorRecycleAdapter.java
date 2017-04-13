@@ -38,7 +38,7 @@ public  class DetailActorRecycleAdapter extends RecyclerView.Adapter<DetailActor
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-            x.image().bind(((ViewHolder)holder).iv,mList.get(position).getImg());
+            x.image().bind(holder.iv,mList.get(position).getImg());
            holder.tvName.setText(mList.get(position).getName()+"");
            holder.tvNameEn.setText(mList.get(position).getNameEn()+"");
 

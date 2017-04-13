@@ -41,12 +41,13 @@
         android:layout_height="wrap_content" />
 </RelativeLayout>
     <ScrollView
+        android:layout_marginBottom="45dp"
         android:layout_below="@+id/rlv_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <ImageView
         android:background="@drawable/my_home_header_cover"
         android:layout_width="match_parent"
@@ -60,7 +61,7 @@
     <ImageView
         android:layout_marginTop="50dp"
         android:layout_marginLeft="30dp"
-        android:src="@drawable/ic_live_bottombar_v_play"
+        android:src="@drawable/img_play"
         android:layout_width="50dp"
         android:layout_height="50dp" />
     <RelativeLayout
@@ -172,13 +173,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 <RelativeLayout
+    android:id="@+id/rl_live"
     android:layout_marginTop="10dp"
     android:layout_below="@+id/rlv_detail"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:gravity="center"
         android:text="直播"
         android:layout_marginLeft="5dp"
@@ -196,13 +198,102 @@
         android:layout_width="50dp"
         android:layout_height="50dp" />
     <ImageView
-        android:id="@+id/iv_"
+        android:id="@+id/iv_live"
         android:layout_marginLeft="5dp"
         android:layout_below="@+id/btn_size"
         android:layout_width="150dp"
         android:layout_height="60dp" />
-
+    <TextView
+        android:textSize="15sp"
+        android:id="@+id/tv_detail_live_name"
+        android:ellipsize="end"
+        android:lines="1"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/iv_live"
+        android:layout_below="@id/btn_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:textSize="10sp"
+        android:id="@+id/tv_detail_live_size"
+        android:layout_below="@id/tv_detail_live_name"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/iv_live"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@+id/rl_live"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+<TextView
+    android:layout_alignTop="@+id/btn_video"
+    android:textSize="18sp"
+    android:layout_alignLeft="@+id/iv_detail_video"
+    android:text="视频"
+    android:id="@+id/tv_video"
+    android:layout_width="wrap_content"
+    android:layout_height="30dp" />
+        <Button
+            android:id="@+id/btn_video"
+            android:textSize="15sp"
+            android:background="@null"
+            android:drawableRight="@drawable/icon_showtime_arrow_gray"
+            android:layout_alignRight="@+id/iv_detail_video"
+            android:layout_width="60dp"
+            android:layout_height="30dp" />
+        <TextView
+            android:layout_alignTop="@+id/btn_pic"
+            android:layout_marginLeft="5dp"
+            android:textSize="18sp"
+            android:layout_alignLeft="@+id/iv_detail_pic"
+            android:text="图片"
+            android:id="@+id/tv_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+        <Button
+            android:id="@+id/btn_pic"
+            android:background="@null"
+            android:drawableRight="@drawable/icon_showtime_arrow_gray"
+            android:layout_alignRight="@+id/iv_detail_pic"
+            android:layout_width="60dp"
+            android:layout_height="30dp" />
+        <ImageView
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/tv_video"
+            android:scaleType="fitXY"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/iv_detail_video"
+            android:layout_marginLeft="5dp"
+            android:layout_width="210dp"
+            android:layout_height="120dp" />
+        <ImageView
+            android:layout_marginTop="70dp"
+            android:layout_marginLeft="90dp"
+            android:src="@drawable/img_play"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <View
+            android:layout_marginTop="5dp"
+            android:background="#88888888"
+            android:layout_below="@+id/tv_video"
+            android:id="@+id/view_video"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@+id/iv_detail_video"
+            android:layout_width="1dp"
+            android:layout_height="120dp"/>
+        <ImageView
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_below="@+id/tv_video"
+            android:scaleType="fitXY"
+            android:layout_alignParentRight="true"
+            android:id="@+id/iv_detail_pic"
+            android:layout_marginLeft="5dp"
+            android:layout_width="130dp"
+            android:layout_height="120dp" />
+    </RelativeLayout>
 </RelativeLayout>
     </ScrollView>
     <LinearLayout

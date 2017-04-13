@@ -9,4 +9,6 @@ public class Url {
     public static final String  LOCATION_MOVIE_ID ="https://api-m.mtime.cn/Showtime/LocationMovies.api?locationId=";//正在热映
     public static final String  MOVIE_COMING_NEW ="https://api-m.mtime.cn/Movie/MovieComingNew.api?locationId=";//即将上映
     public static final String MOVIE_ID_CONTENT = "https://ticket-api-m.mtime.cn/movie/detail.api?locationId=290&movieId=";
+    public static final String NOTICE = "https://api-m.mtime.cn/Movie/Video.api?pageIndex=";
+    public static final String PICTURE = "https://api-m.mtime.cn/Movie/ImageAll.api?movieId=";
 }
